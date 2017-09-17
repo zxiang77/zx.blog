@@ -12,6 +12,7 @@ gem "jekyll", "3.5.2"
 
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
 gem "jekyll-theme-time-machine"
+gem "jekyll-theme-cayman"
 gem 'redcarpet', '~> 3.0.0'
 gem "minima"
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
