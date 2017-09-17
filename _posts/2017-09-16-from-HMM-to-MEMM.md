@@ -35,7 +35,7 @@ There are three main things I will cover in this article:
 
 3) learning, given a set of states and observations, learn parameter $A$ and $B$ for HMM.
 
-I'll explain why I need these now, but before that it is useful to know the difference between <b>generative model</b> and <b>discriminative model</b>. You can check this [post]({{ site.url }}/zx.blog/ml/2017/09/15/discriminative-vs-generative-model.html) out.
+I'll explain why I need these now, but before that it is useful to know the difference between <b>generative model</b> and <b>discriminative model</b>. You can check this [post]({{ site.url }}ml/2017/09/15/discriminative-vs-generative-model.html) out.
 
 #### How to Make Use of $A$ and $B$?
 First of all, HMM is a generative model. That means it will do:
