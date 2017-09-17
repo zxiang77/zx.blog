@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-09-16T20:06:15-07:00</updated><id>http://localhost:4000/</id><title type="html">Zili’s Blog</title><subtitle>This is a place where Zili record things while learning</subtitle><entry><title type="html">From HMM to MEMM</title><link href="http://localhost:4000/nlp/2017/09/16/from-HMM-to-MEMM.html" rel="alternate" type="text/html" title="From HMM to MEMM" /><published>2017-09-16T17:57:35-07:00</published><updated>2017-09-16T17:57:35-07:00</updated><id>http://localhost:4000/nlp/2017/09/16/from-HMM-to-MEMM</id><content type="html" xml:base="http://localhost:4000/nlp/2017/09/16/from-HMM-to-MEMM.html">&lt;p&gt;Both HMM (Hidden Markov Model) and MEMM(MaxEnt Markov Model) are widely used in the field of NLP. This article is trying to articulate these two models and compare their differences. Most of my knowledge about them comes from slides of MIT&amp;#39;s NLP course.&lt;/p&gt;
+
+&lt;h3&gt;HMM&lt;/h3&gt;
+
+&lt;p&gt;First thing first, HMM has two inter-dependent sequences: &lt;b&gt;observation&lt;/b&gt;, and &lt;b&gt;(hidden) states&lt;/b&gt; as we can indicate from the name of HMM (say with me: H-I-D-D-E-N Markov Model), the state changing lies behind what we can observe. e.g. POS (part of speech) tagging (states, as what lies behind) for a sentence (observation, what we see):
+observations: I like apple
+states: PRP VBP NN
+Given &lt;b&gt;observation&lt;/b&gt;, and &lt;b&gt; states&lt;/b&gt; defined, let&amp;#39;s define more important variables for HMM:
+$A$: &lt;b&gt;state changing matrix&lt;/b&gt;, with $A&lt;em&gt;{i,j}$ stands for the probability from state $i$ to state $j$
+$B$: &lt;b&gt;emission probability&lt;/b&gt;, with $B&lt;/em&gt;{j,o&lt;em&gt;t}$ stands for the probability emission from state $j$ to observation $o&lt;/em&gt;t$&lt;/p&gt;
+
+&lt;h4&gt;What do we need from HMM?&lt;/h4&gt;
+
+&lt;p&gt;There are three main things I will cover in this article:
+1) estimating probability of a sequence of states
+2) decoding, given observations and a HMM model $\lambda(A,B)$
+3) learning, given a set of states and observations, learn parameter $A$ and $B$ for HMM.
+I&amp;#39;ll explain why I need these now, but before that I am gonna explain something background knowledge about &lt;b&gt;generative model&lt;/b&gt; and &lt;b&gt;discriminative model&lt;/b&gt;&lt;/p&gt;
+
+&lt;h4&gt;Generative Model vs. Deterministic Model&lt;/h4&gt;
+
+&lt;p&gt;In the world of machine learning, we actually deal with probability for the most of the time. To name a few, Naive Bayes, logistic regression. However, there are two main ways to deal with it, given observation $O$, and the sequence of states $S$ and the two ways are related to two different types of models in machine learning:
+1)&lt;b&gt;discriminative models&lt;/b&gt; maximize the chain probability given the observation (also called MLE - maximum likelihood estimation):
+$\DeclareMathOperator*{\argmax}{arg\,max}$
+$\argmax\limits&lt;em&gt;{S}P(S|O)$
+2)&lt;b&gt;generative models&lt;/b&gt; optimize posterior probability given prior probability (also called MAP - maximize a posterior):
+$\argmax\limits&lt;/em&gt;{S}P(S|O) $
+$=\argmax\limits&lt;em&gt;{S}\frac{P(O|S)P(S)}{P(O)}  $ (Bayes Rules)
+$=\argmax\limits&lt;/em&gt;{S} P(O|S)P(S)$ remove $P(O)$ as that does not affect when $S$ can maximize the term
+This is the final posterior term we want to maximize:
+$\argmax\limits_{S} P(O|S)P(S)$
+Here, the $P(S)$ is the prior.
+P.S.: the discriminative and generative model&amp;#39;s connection with MLE v.s. MAP concepts are just my own words, I didn&amp;#39;t find anyone relate them together, though they share the same formula. If anyone knows any difference, please let me know!&lt;/p&gt;
+
+&lt;p&gt;It is usually said that generative models are more flexible because it can be re-constructed to the form of $P(S|O)$, but the fact is, discriminative usually gives better performance than generative model. It is due to the principles behind these two types of models: 1) generative models model how the observations were generated and calculate which class gives the highest probability given the generation assumption ($P(x|y)P(y)$); 2) discriminative, however, only cares about classifying the data based on data ($P(y|x)$). These concepts makes generative models have more assumptions than discriminative models, so when its assumption does not stand well, its performance will be worse than discriminative models.&lt;/p&gt;
+
+&lt;h4&gt;How to Make Use of $A$ and $B$?&lt;/h4&gt;
+
+&lt;p&gt;First of all, HMM is a generative model. That means it will do:
+$\argmax\limits&lt;em&gt;{S}P(O|S)P(S)$
+$=\argmax\limits&lt;/em&gt;{S} \prod\limits&lt;em&gt;{s&amp;#39;,s\in S, o\in O} P(o|s)P(s)$
+$=\argmax\limits&lt;/em&gt;{S} \prod\limits&lt;em&gt;{s&amp;#39;,s\in S, o\in O} B&lt;/em&gt;{s,o}P(s&amp;#39;)A_{s&amp;#39;,s}$
+$P(s&amp;#39;)$ here stands for probability of previous observation&amp;#39;s ending in state $s&amp;#39;$.
+Actually, this term solves the first two of our problems: 1) getting probability and 2) getting most likely sequence.&lt;/p&gt;
+
+&lt;h4&gt;Forward Algorithm and Viterbi Algorithm&lt;/h4&gt;
+
+&lt;p&gt;So we got our objective in deriving probability and decoding, so how could we implement it? If we want to do it with brute force, it will be an $O(n^t)$ solution with $n$ stands for number of states, and $t$ stands for the length of the observations, which is not acceptable. However, it can be solved with dynamic programming with just $O(n\cdot t)$ time complexity, because we can derive the probability for each state in current observation with just all the probability of each state from the observation right before current observation. I am gonna just put the pseudo-code for forward and Viterbi algorithm from MIT slides here.
+Here we have to note that state 1 and  $N$ here are starting state and ending state, so we only deal with them during initialization and termination step, not in iteration step. Pseudo-code might consider them during iteration step, but it&amp;#39;s not actually considering them (there were a little bit inconsistency in the MIT slides when I was reading it, but just be aware of start and end state here)
+As we can see, though both use dynamic programming, there are a few differences here:
+1) The iteration equation for forward algorithm and Viterbi are respectively:
+$forward[t][i] = \sum\limits&lt;em&gt;{1 &amp;lt;j &amp;lt;N} forward[t-1][j]\cdot A[j][i]$
+$Viterbi[t][i] = \argmax\limits&lt;/em&gt;{1 &amp;lt;j &amp;lt;N} Viterbi[t-1][j]\cdot A[j][i]\cdot B(i, o&lt;em&gt;t)$
+$backpointer[t][i] = \argmax\limits&lt;/em&gt;{1 &amp;lt;j &amp;lt; N} Viterbi[t-1][j]\cdot A[j][i]$ (again not considering $B(i, o_t)$ here because it does not affect the result)
+It is just because we want to get the probability of observations given the model $P(O|\lambda)$, this probability just sums up probabilities of all the possible sequences of states. While with Viterbi, we are only concerned with the one sequence of states that maximize the probability of the sequence.&lt;/p&gt;
+
+&lt;h4&gt;How to train an HMM?&lt;/h4&gt;
+
+&lt;p&gt;Here comes the most important part about the model. The quick answer is Expectation Maximization (EM) with forward-backward algorithm.
+The long answer goes from here: for a normal Markov model with no hidden state, the state transformation can be easily computed by:
+$\hat{A&lt;em&gt;{i,j}}=\frac{\text{count of all transformation from i to j}}{\text{count of all transformation from i}}$
+But we cannot do it with HMM because of hidden states. Therefore, we will need to derive hyper-parameters with some estimation with probability:
+$\hat{A&lt;/em&gt;{i,j}}=\frac{\text{possibility of all sequences transform from i to j}}{\text{possibility of all sequences from i}}$
+How do we get the probability of all sequence from $i$ to $j$? The answer is - forward-backward algorithm!
+So as we already know that from forward algorithm, we know $\alpha[t][j]$ stands for the probability so far at $o&lt;em&gt;t$ of all the state sequences ending in state $j$. From this probability, we only know the probability of $o&lt;/em&gt;1o&lt;em&gt;2...o&lt;/em&gt;i...o&lt;em&gt;t$, but nothing behind $o&lt;/em&gt;{t+1}...o&lt;em&gt;T$. That&amp;#39;s why we need a backward algorithm here to &amp;#39;foresee&amp;#39; the probability of observations behind current observation.
+The backward algorithm is very similar to forward algorithm, except for one going from backward one from forward, so we just need to modify forward algorithm a little bit:
+1) Iterate from $T$ to $1$;
+2) Initialization: $\beta[T][i] = A&lt;/em&gt;{iN}, 1&amp;lt;i&amp;lt;N$
+3) Recursion: $\beta[t][i] = \sum\limits&lt;em&gt;{1&amp;lt;j&amp;lt;N}A[i][j]\cdot B[j][o_{t+1}]\cdot\beta[t+1][j]$
+4) Termination: $\alpha[T][N] = \beta[1][1]= P(O|\lambda)=\sum\limits&lt;/em&gt;{j=1}^{N-1}A[1][j]\cdot B[j][o&lt;em&gt;1]\cdot\beta(2, j)$
+Now we have everything we need for estimating sequence probability:
+define $\xi&lt;/em&gt;t(i, j)$ as probability of being in state $i$ in $t$ and $j$ in $t+1$.
+$\xi&lt;em&gt;t(i, j)=\frac{\alpha[t][]\cdot A[i][j]\cdot \beta[t+1][j]\cdot B[j][o_{t+1}]}{\alpha[T][N]}$
+Similar for estimating $B$:
+$\hat{B}[j][v_k] = \frac{\text{expected count of observing $v&lt;/em&gt;k$ on j}}{\text{expected count on state j}}$
+To estimate it we want to know the probability of being in state $j$ at time $t$, denoted as $\gamma[t][j]$:
+$\gamma[t][j] = \frac{P(q_t=j, O|\lambda)}{P(O|\lambda)}=\frac{\alpha[t][j]\cdot \beta[t][j]}{P(O|\lambda)}$
+and we can estimate $A$ with $xi$ and $B$ from it with $\gamma$. And pseudo-code below.
+/**************&lt;strong&gt;&lt;em&gt;place pseudo code here&lt;/em&gt;&lt;/strong&gt;*********************/&lt;/p&gt;
+
+&lt;p&gt;Actually I was first confused by how to train the model when given a dataset of observations, because the code here only takes a singe sequence of observations into account. And I don&amp;#39;t know when we a dealing with many sequences of observations, could it still converge? My answer from my friend is &amp;quot;YES&amp;quot;, though he doesn&amp;#39;t know the proof either. So if anyone knows the proof, feel free to share it with me!&lt;/p&gt;
+
+&lt;h3&gt;MEMM&lt;/h3&gt;
+
+&lt;p&gt;Ok. So we have talked much about HMM and let&amp;#39;s briefly talk about MEMM (Max Entropy Markov Model). Before talking about MEMM, we should know MaxEnt classifier first. It is also called multinomial logistic regression. I will explain why later, but now I will focused more on how it works. It also works like logistic, because it takes a few observed features and output the distribution of probabilities among classes. &lt;b&gt;Entropy&lt;/b&gt; describes the average amount of information from a distribution. The higher it is, the less information we have. The entropy of a distribution $H(x)$ is computed as:
+$H(x)=-\sum\limits&lt;em&gt;{x} P(x)\cdot \log&lt;/em&gt;2 P(x)$
+ This sounds too abstract, check out this example on Wikipedia: https://en.wikipedia.org/wiki/Entropy&lt;em&gt;(information&lt;/em&gt;theory)#Example
+As we can observe from the name, this classifier maximize the entropy of the training data, to achieve this, we have to deal with two cases:
+1) When we observed some features that makes the probability distribution among classes unevenly, such as it is more likely be class $c$ given feature $f$, then assign probability accordingly to class $c$;
+2) When we have no more features left, we just assign the rest of probability evenly to the rest of the classes.
+Actually, it turns out when we are maximizing the entropy of the model given the dataset, we are maximizing the probability of training data as well, that&amp;#39;s why MaxEnt is also called multinomial logistic regression.
+There is a thing we should note, is that the feature $f$ here, we should see it as a binary function, because it only indicates if the feature exists in the observation or not.&lt;/p&gt;
+
+&lt;h4&gt;Classification&lt;/h4&gt;
+
+&lt;p&gt;So far the MaxEnt classifier only classify a single observation based on its features, so how do we implement it in  sequence labeling? The answer is MEMM. Actually we can implement Viterbi algorithm from HMM here with a little modification because they just share something in common. Assuming we are classifying observation $o&lt;em&gt;t$, the outcome is the probability distribution of all the class in this position. If we think about it in sequence labeling, when we are labeling $o&lt;/em&gt;t$, we already found the probability distribution of all classes for all previous observations from $o&lt;em&gt;1o&lt;/em&gt;2...o&lt;em&gt;{t-1}$. Then we can classify $o&lt;/em&gt;t$ with previous labels with HMM and more excitingly with other features!
+So far, what we are talking about MaxEnt, we are talking about classifying based on given features, this sounds like a discriminative model right? And yes! &lt;b&gt;MaxEnt classifier is a discriminative classifier&lt;/b&gt;. Therefore, we will change the iteration equation of Viterbi from HMM form to MaxEnt form, like from:
+$Viterbi[t][i] = \argmax\limits&lt;em&gt;{1 &amp;lt;j &amp;lt;N} Viterbi[t-1][j]\cdot A[j][i]\cdot B(i, o&lt;/em&gt;t)$
+to:
+$Viterbi[t][i] = \argmax\limits&lt;em&gt;{1 &amp;lt;j &amp;lt;N} Viterbi[t-1][j]\cdot P(s&lt;/em&gt;j|s&lt;em&gt;i,o&lt;/em&gt;t), 1 &amp;lt; j &amp;lt; N, 1 &amp;lt; t &amp;lt; T $
+$=\argmax\limits_{1 &amp;lt;j &amp;lt;N} Viterbi[t-1][j]\cdot \vec{f}\cdot\vec{w}$
+And that&amp;#39;s it!&lt;/p&gt;
+
+&lt;h4&gt;Why MEMM over HMM?&lt;/h4&gt;
+
+&lt;p&gt;The reason is quite obvious. Because for HMM, we only derive state for our next sequence given the result of previous sequences. However, this does not work when we have some features only lies behind our current observation. MEMM can introduce these features while training its parameters and that&amp;#39;s a huge advantage.&lt;/p&gt;</content><author><name></name></author><summary type="html">Both HMM (Hidden Markov Model) and MEMM(MaxEnt Markov Model) are widely used in the field of NLP. This article is trying to articulate these two models and compare their differences. Most of my knowledge about them comes from slides of MIT&amp;#39;s NLP course.</summary></entry><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/2017/09/16/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2017-09-16T14:50:56-07:00</published><updated>2017-09-16T14:50:56-07:00</updated><id>http://localhost:4000/jekyll/update/2017/09/16/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2017/09/16/welcome-to-jekyll.html">&lt;p&gt;You’ll find this post in your &lt;code&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+
+&lt;p&gt;To add new posts, simply add a file in the &lt;code&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+
+&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.</summary></entry></feed>
