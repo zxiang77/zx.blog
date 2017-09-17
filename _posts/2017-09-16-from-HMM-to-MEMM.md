@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title:  "From HMM to MEMM"
 date:   2017-09-16 17:57:35 -0700
 categories: NLP
