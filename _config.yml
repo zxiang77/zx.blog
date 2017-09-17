@@ -27,7 +27,6 @@ theme: minima
 
 sass:
     style: compressed
-    sass_dir: _scss
 plugins:
   - jekyll-feed
 
