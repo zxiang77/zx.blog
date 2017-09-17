@@ -23,7 +23,7 @@ github_username:  zxiang77
 
 # Build settings
 markdown: redcarpet
-theme: jekyll-theme-time-machine
+theme: minima
 plugins:
   - jekyll-feed
 
