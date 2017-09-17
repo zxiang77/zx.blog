@@ -24,6 +24,7 @@ github_username:  zxiang77
 # Build settings
 markdown: redcarpet
 theme: minima
+sass_dir: _sass
 sass:
     style: compressed
 plugins:
