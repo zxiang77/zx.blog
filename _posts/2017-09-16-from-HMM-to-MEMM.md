@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title:  "From HMM to MEMM"
 date:   2017-09-16 17:57:35 -0700
 categories: NLP
@@ -24,23 +24,23 @@ I'll explain why I need these now, but before that I am gonna explain something 
 In the world of machine learning, we actually deal with probability for the most of the time. To name a few, Naive Bayes, logistic regression. However, there are two main ways to deal with it, given observation $O$, and the sequence of states $S$ and the two ways are related to two different types of models in machine learning:
 1)<b>discriminative models</b> maximize the chain probability given the observation (also called MLE - maximum likelihood estimation):
 $\DeclareMathOperator*{\argmax}{arg\,max}$
-$\argmax\limits\_{S}P(S|O)$
+$\argmax\limits\_{S}P(S\|O)$
 2)<b>generative models</b> optimize posterior probability given prior probability (also called MAP - maximize a posterior):
-$\argmax\limits\_{S}P(S|O) $
-$=\argmax\limits\_{S}\frac{P(O|S)P(S)}{P(O)}  $ (Bayes Rules)
-$=\argmax\limits\_{S} P(O|S)P(S)$ remove $P(O)$ as that does not affect when $S$ can maximize the term
+$\argmax\limits\_{S}P(S\|O) $
+$=\argmax\limits\_{S}\frac{P(O\|S)P(S)}{P(O)}  $ (Bayes Rules)
+$=\argmax\limits\_{S} P(O\|S)P(S)$ remove $P(O)$ as that does not affect when $S$ can maximize the term
 This is the final posterior term we want to maximize:
-$\argmax\limits\_{S} P(O|S)P(S)$
+$\argmax\limits\_{S} P(O\|S)P(S)$
 Here, the $P(S)$ is the prior.
 P.S.: the discriminative and generative model's connection with MLE v.s. MAP concepts are just my own words, I didn't find anyone relate them together, though they share the same formula. If anyone knows any difference, please let me know!
 
-It is usually said that generative models are more flexible because it can be re-constructed to the form of $P(S|O)$, but the fact is, discriminative usually gives better performance than generative model. It is due to the principles behind these two types of models: 1) generative models model how the observations were generated and calculate which class gives the highest probability given the generation assumption ($P(x|y)P(y)$); 2) discriminative, however, only cares about classifying the data based on data ($P(y|x)$). These concepts makes generative models have more assumptions than discriminative models, so when its assumption does not stand well, its performance will be worse than discriminative models.
+It is usually said that generative models are more flexible because it can be re-constructed to the form of $P(S\|O)$, but the fact is, discriminative usually gives better performance than generative model. It is due to the principles behind these two types of models: 1) generative models model how the observations were generated and calculate which class gives the highest probability given the generation assumption ($P(x\|y)P(y)$); 2) discriminative, however, only cares about classifying the data based on data ($P(y\|x)$). These concepts makes generative models have more assumptions than discriminative models, so when its assumption does not stand well, its performance will be worse than discriminative models.
 
 
 #### How to Make Use of $A$ and $B$?
 First of all, HMM is a generative model. That means it will do:
-$\argmax\limits\_{S}P(O|S)P(S)$
-$=\argmax\limits\_{S} \prod\limits\_{s',s\in S, o\in O} P(o|s)P(s)$
+$\argmax\limits\_{S}P(O\|S)P(S)$
+$=\argmax\limits\_{S} \prod\limits\_{s',s\in S, o\in O} P(o\|s)P(s)$
 $=\argmax\limits\_{S} \prod\limits\_{s',s\in S, o\in O} B\_{s,o}P(s')A\_{s',s}$
 $P(s')$ here stands for probability of previous observation's ending in state $s'$.
 Actually, this term solves the first two of our problems: 1) getting probability and 2) getting most likely sequence.
@@ -53,7 +53,7 @@ As we can see, though both use dynamic programming, there are a few differences 
 $forward[t][i] = \sum\limits\_{1 <j <N} forward[t-1][j]\cdot A[j][i]$
 $Viterbi[t][i] = \argmax\limits\_{1 <j <N} Viterbi[t-1][j]\cdot A[j][i]\cdot B(i, o\_t)$
 $backpointer[t][i] = \argmax\limits\_{1 <j < N} Viterbi[t-1][j]\cdot A[j][i]$ (again not considering $B(i, o\_t)$ here because it does not affect the result)
-It is just because we want to get the probability of observations given the model $P(O|\lambda)$, this probability just sums up probabilities of all the possible sequences of states. While with Viterbi, we are only concerned with the one sequence of states that maximize the probability of the sequence.
+It is just because we want to get the probability of observations given the model $P(O\|\lambda)$, this probability just sums up probabilities of all the possible sequences of states. While with Viterbi, we are only concerned with the one sequence of states that maximize the probability of the sequence.
 
 #### How to train an HMM?
 Here comes the most important part about the model. The quick answer is Expectation Maximization (EM) with forward-backward algorithm.
@@ -67,14 +67,14 @@ The backward algorithm is very similar to forward algorithm, except for one goin
 1) Iterate from $T$ to $1$;
 2) Initialization: $\beta[T][i] = A\_{iN}, 1<i<N$
 3) Recursion: $\beta[t][i] = \sum\limits\_{1<j<N}A[i][j]\cdot B[j][o\_{t+1}]\cdot\beta[t+1][j]$
-4) Termination: $\alpha[T][N] = \beta[1][1]= P(O|\lambda)=\sum\limits\_{j=1}^{N-1}A[1][j]\cdot B[j][o\_1]\cdot\beta(2, j)$
+4) Termination: $\alpha[T][N] = \beta[1][1]= P(O\|\lambda)=\sum\limits\_{j=1}^{N-1}A[1][j]\cdot B[j][o\_1]\cdot\beta(2, j)$
 Now we have everything we need for estimating sequence probability:
 define $\xi\_t(i, j)$ as probability of being in state $i$ in $t$ and $j$ in $t+1$.
 $\xi\_t(i, j)=\frac{\alpha[t][]\cdot A[i][j]\cdot \beta[t+1][j]\cdot B[j][o\_{t+1}]}{\alpha[T][N]}$
 Similar for estimating $B$:
 $\hat{B}[j][v\_k] = \frac{\text{expected count of observing $v\_k$ on j}}{\text{expected count on state j}}$
 To estimate it we want to know the probability of being in state $j$ at time $t$, denoted as $\gamma[t][j]$:
-$\gamma[t][j] = \frac{P(q\_t=j, O|\lambda)}{P(O|\lambda)}=\frac{\alpha[t][j]\cdot \beta[t][j]}{P(O|\lambda)}$
+$\gamma[t][j] = \frac{P(q\_t=j, O\|\lambda)}{P(O\|\lambda)}=\frac{\alpha[t][j]\cdot \beta[t][j]}{P(O\|\lambda)}$
 and we can estimate $A$ with $xi$ and $B$ from it with $\gamma$. And pseudo-code below.
 /*****************place pseudo code here************************/
 
@@ -94,7 +94,7 @@ So far the MaxEnt classifier only classify a single observation based on its fea
 So far, what we are talking about MaxEnt, we are talking about classifying based on given features, this sounds like a discriminative model right? And yes! <b>MaxEnt classifier is a discriminative classifier</b>. Therefore, we will change the iteration equation of Viterbi from HMM form to MaxEnt form, like from:
 $Viterbi[t][i] = \argmax\limits\_{1 <j <N} Viterbi[t-1][j]\cdot A[j][i]\cdot B(i, o\_t)$
 to:
-$Viterbi[t][i] = \argmax\limits\_{1 <j <N} Viterbi[t-1][j]\cdot P(s\_j|s\_i,o\_t), 1 < j < N, 1 < t < T $
+$Viterbi[t][i] = \argmax\limits\_{1 <j <N} Viterbi[t-1][j]\cdot P(s\_j\|s\_i,o\_t), 1 < j < N, 1 < t < T $
 $=\argmax\limits\_{1 <j <N} Viterbi[t-1][j]\cdot \vec{f}\cdot\vec{w}$
 And that's it!
 #### Why MEMM over HMM?

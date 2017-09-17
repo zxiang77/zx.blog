@@ -70,7 +70,26 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <p>Both HMM (Hidden Markov Model) and MEMM(MaxEnt Markov Model) are widely used in the field of NLP. This article is trying to articulate these two models and compare their differences. Most of my knowledge about them comes from slides of MIT’s NLP course.</p>
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">From HMM to MEMM</h1>
+    <p class="post-meta">
+      <time datetime="2017-09-16T17:57:35-07:00" itemprop="datePublished">
+        
+        Sep 16, 2017
+      </time>
+      <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+      <script type="text/javascript"
+         src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+      </script>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Both HMM (Hidden Markov Model) and MEMM(MaxEnt Markov Model) are widely used in the field of NLP. This article is trying to articulate these two models and compare their differences. Most of my knowledge about them comes from slides of MIT’s NLP course.</p>
 
 <h3 id="hmm">HMM</h3>
 <p>First thing first, HMM has two inter-dependent sequences: <b>observation</b>, and <b>(hidden) states</b> as we can indicate from the name of HMM (say with me: H-I-D-D-E-N Markov Model), the state changing lies behind what we can observe. e.g. POS (part of speech) tagging (states, as what lies behind) for a sentence (observation, what we see):
@@ -100,16 +119,7 @@ $\argmax\limits_{S} P(O|S)P(S)$
 Here, the $P(S)$ is the prior.
 P.S.: the discriminative and generative model’s connection with MLE v.s. MAP concepts are just my own words, I didn’t find anyone relate them together, though they share the same formula. If anyone knows any difference, please let me know!</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>It is usually said that generative models are more flexible because it can be re-constructed to the form of $P(S</td>
-      <td>O)$, but the fact is, discriminative usually gives better performance than generative model. It is due to the principles behind these two types of models: 1) generative models model how the observations were generated and calculate which class gives the highest probability given the generation assumption ($P(x</td>
-      <td>y)P(y)$); 2) discriminative, however, only cares about classifying the data based on data ($P(y</td>
-      <td>x)$). These concepts makes generative models have more assumptions than discriminative models, so when its assumption does not stand well, its performance will be worse than discriminative models.</td>
-    </tr>
-  </tbody>
-</table>
+<p>It is usually said that generative models are more flexible because it can be re-constructed to the form of $P(S|O)$, but the fact is, discriminative usually gives better performance than generative model. It is due to the principles behind these two types of models: 1) generative models model how the observations were generated and calculate which class gives the highest probability given the generation assumption ($P(x|y)P(y)$); 2) discriminative, however, only cares about classifying the data based on data ($P(y|x)$). These concepts makes generative models have more assumptions than discriminative models, so when its assumption does not stand well, its performance will be worse than discriminative models.</p>
 
 <h4 id="how-to-make-use-of-a-and-b">How to Make Use of $A$ and $B$?</h4>
 <p>First of all, HMM is a generative model. That means it will do:
@@ -173,6 +183,11 @@ $=\argmax\limits_{1 &lt;j &lt;N} Viterbi[t-1][j]\cdot \vec{f}\cdot\vec{w}$
 And that’s it!</p>
 <h4 id="why-memm-over-hmm">Why MEMM over HMM?</h4>
 <p>The reason is quite obvious. Because for HMM, we only derive state for our next sequence given the result of previous sequences. However, this does not work when we have some features only lies behind our current observation. MEMM can introduce these features while training its parameters and that’s a huge advantage.</p>
+
+  </div>
+
+  
+</article>
 
       </div>
     </main>
