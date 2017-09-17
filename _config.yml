@@ -24,6 +24,8 @@ github_username:  zxiang77
 # Build settings
 markdown: redcarpet
 theme: minima
+sass:
+    style: compressed
 plugins:
   - jekyll-feed
 
