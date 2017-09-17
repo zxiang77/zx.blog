@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-09-17T01:38:06-07:00</updated><id>http://localhost:4000/</id><title type="html">Zili’s Blog</title><subtitle>This is a place where Zili record things while learning</subtitle><entry><title type="html">From HMM to MEMM</title><link href="http://localhost:4000/nlp/2017/09/16/from-HMM-to-MEMM.html" rel="alternate" type="text/html" title="From HMM to MEMM" /><published>2017-09-16T17:57:35-07:00</published><updated>2017-09-16T17:57:35-07:00</updated><id>http://localhost:4000/nlp/2017/09/16/from-HMM-to-MEMM</id><content type="html" xml:base="http://localhost:4000/nlp/2017/09/16/from-HMM-to-MEMM.html">&lt;p&gt;$\DeclareMathOperator*{\argmax}{arg\,max}$
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-09-17T12:58:09-07:00</updated><id>http://localhost:4000/</id><title type="html">Zili’s Blog</title><subtitle>This is a place where Zili record things while learning</subtitle><entry><title type="html">From HMM to MEMM</title><link href="http://localhost:4000/nlp/2017/09/16/from-HMM-to-MEMM.html" rel="alternate" type="text/html" title="From HMM to MEMM" /><published>2017-09-16T17:57:35-07:00</published><updated>2017-09-16T17:57:35-07:00</updated><id>http://localhost:4000/nlp/2017/09/16/from-HMM-to-MEMM</id><content type="html" xml:base="http://localhost:4000/nlp/2017/09/16/from-HMM-to-MEMM.html">&lt;p&gt;$\DeclareMathOperator*{\argmax}{arg\,max}$
 Both HMM (Hidden Markov Model) and MEMM(MaxEnt Markov Model) are widely used in the field of NLP. This article is trying to articulate these two models and compare their differences. Most of my knowledge about them comes from &lt;a href=&quot;http://www.mit.edu/~6.863/spring2011/jmnew/6.pdf&quot;&gt;slides of MIT’s NLP course&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;hmm&quot;&gt;HMM&lt;/h3&gt;
@@ -23,7 +23,7 @@ Both HMM (Hidden Markov Model) and MEMM(MaxEnt Markov Model) are widely used in 
 
 &lt;p&gt;3) learning, given a set of states and observations, learn parameter $A$ and $B$ for HMM.&lt;/p&gt;
 
-&lt;p&gt;I’ll explain why I need these now, but before that it is useful to know the difference between &lt;b&gt;generative model&lt;/b&gt; and &lt;b&gt;discriminative model&lt;/b&gt;. You can check this &lt;a href=&quot;http://localhost:4000/zx.blog/ml/2017/09/15/discriminative-vs-generative-model.html&quot;&gt;post&lt;/a&gt; out.&lt;/p&gt;
+&lt;p&gt;I’ll explain why I need these now, but before that it is useful to know the difference between &lt;b&gt;generative model&lt;/b&gt; and &lt;b&gt;discriminative model&lt;/b&gt;. You can check this &lt;a href=&quot;http://localhost:4000ml/2017/09/15/discriminative-vs-generative-model.html&quot;&gt;post&lt;/a&gt; out.&lt;/p&gt;
 
 &lt;h4 id=&quot;how-to-make-use-of-a-and-b&quot;&gt;How to Make Use of $A$ and $B$?&lt;/h4&gt;
 &lt;p&gt;First of all, HMM is a generative model. That means it will do:&lt;/p&gt;
@@ -157,4 +157,86 @@ $\argmax\limits_{S}P(S|O)$&lt;/p&gt;
 
 &lt;p&gt;P.S.: the discriminative and generative model’s connection with MLE v.s. MAP concepts are just my own words, I didn’t find anyone relate them together, though they share the same formula. If anyone knows any difference, please let me know!&lt;/p&gt;
 
-&lt;p&gt;It is usually said that generative models are more flexible because it can be re-constructed to the form of $P(S|O)$, but the fact is, discriminative usually gives better performance than generative model. It is due to the principles behind these two types of models: 1) generative models model how the observations were generated and calculate which class gives the highest probability given the generation assumption ($P(x|y)P(y)$); 2) discriminative, however, only cares about classifying the data based on data ($P(y|x)$). These concepts makes generative models have more assumptions than discriminative models, so when its assumption does not stand well, its performance will be worse than discriminative models.&lt;/p&gt;</content><author><name></name></author><summary type="html">Generative Model vs. Deterministic Model In the world of machine learning, we actually deal with probability for the most of the time. To name a few, Naive Bayes, logistic regression. However, there are two main ways to deal with it, given observation $O$, and the sequence of states $S$ and the two ways are related to two different types of models in machine learning:</summary></entry></feed>
+&lt;p&gt;It is usually said that generative models are more flexible because it can be re-constructed to the form of $P(S|O)$, but the fact is, discriminative usually gives better performance than generative model. It is due to the principles behind these two types of models: 1) generative models model how the observations were generated and calculate which class gives the highest probability given the generation assumption ($P(x|y)P(y)$); 2) discriminative, however, only cares about classifying the data based on data ($P(y|x)$). These concepts makes generative models have more assumptions than discriminative models, so when its assumption does not stand well, its performance will be worse than discriminative models.&lt;/p&gt;</content><author><name></name></author><summary type="html">Generative Model vs. Deterministic Model In the world of machine learning, we actually deal with probability for the most of the time. To name a few, Naive Bayes, logistic regression. However, there are two main ways to deal with it, given observation $O$, and the sequence of states $S$ and the two ways are related to two different types of models in machine learning:</summary></entry><entry><title type="html">Perplexity is Actually Naive Bayes</title><link href="http://localhost:4000/nlp/2017/09/11/perplexity-is-actually-naive-bayes.html" rel="alternate" type="text/html" title="Perplexity is Actually Naive Bayes" /><published>2017-09-11T11:34:47-07:00</published><updated>2017-09-11T11:34:47-07:00</updated><id>http://localhost:4000/nlp/2017/09/11/perplexity-is-actually-naive-bayes</id><content type="html" xml:base="http://localhost:4000/nlp/2017/09/11/perplexity-is-actually-naive-bayes.html">&lt;h3 id=&quot;perplexity-is-actually-naive-bayes&quot;&gt;Perplexity is Actually Naive Bayes&lt;/h3&gt;
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\DeclareMathOperator*{\argmin}{arg\,min}&lt;/script&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\DeclareMathOperator*{\argmax}{arg\,max}&lt;/script&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\DeclareMathOperator*{\sign}{sign}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Before everything, it’s for everyone’s good to define some of the notations at the very beginning:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Sentence of length $N$&lt;/strong&gt;: $W=w_1w_2…w_i…w_N$&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Perplexity&lt;/strong&gt;: $PP(W)=p(W)^{-1/N}=p(w_1w_2…w_N)^{-1/N}$&lt;/p&gt;
+
+&lt;p&gt;Perplexity is usually used to test how much the test set correlates to a language model. The lower the perplexity, the more correlation the test set has with the language model. So, it is useful in classifying a sentence (negative/ positive reviews, topic classification, etc.) by training language models for different classification and compare their perplexity with test sentence. The test sentence is most likely to be in the class of the language model having the lowest perplexity with it.&lt;/p&gt;
+
+&lt;p&gt;Then let’s talk about why its doing the same thing as Naive Bayes. I will demonstrate that by discussing a binary classification problem: positive/ negative reviews classification. It will be self-proving to extend it to multinomial classification after this.&lt;/p&gt;
+
+&lt;p&gt;The language model way of doing it is to get:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$\argmin\limits_{c\in{-1,1}} PP(W&lt;/td&gt;
+      &lt;td&gt;y=c) $&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$= \argmin\limits_{c\in{-1,1}} p(W&lt;/td&gt;
+      &lt;td&gt;y=c)^{-1/N}$&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$=\argmax\limits_{c\in{-1,1}} p(W&lt;/td&gt;
+      &lt;td&gt;y=c)$&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;While in Naive Bayes, we are exactly dealing with this!!&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$\argmax\limits_{c\in{-1,1}} p(W&lt;/td&gt;
+      &lt;td&gt;y=c)$&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Similarly, multinomial classification only replace $c\in{-1,1}$ with $c\in C$, with $C$ representing all the possible classes. Then it’s getting much more clear now.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$\argmax\limits_{c\in{-1,1}} p(W&lt;/td&gt;
+      &lt;td&gt;y=c)$&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;$=\argmax\limits_{c\in{-1,1}} p(w_1|y=c)p(w_1|w_2,y=c)…p(w_i|w_{i+1},y=c)…p(w_{N-1}|w_N,y=c)$
+(called introducing Naive Bayes rules for NB, and Ngram for language model)&lt;/p&gt;
+
+&lt;p&gt;$=\argmax\limits_{c\in{-1,1}} \log p(w_0w_1|y=c)+\log p(w_1|w_2,y=c)+…+\log p(w_i|w_{i+1},y=c)+…+\log p(w_{N-1}|w_N,y=c)$
+How do we relate this to n-gram model? If we see the above equation as $y = \vec{w}\vec{x}$, then let’s just think both $\vec{w}$ and $\vec{x}$ as vectors of size $V^n$ with $V$ representing vocabulary size. Then these vectors can represent any n-gram in the language model and it is straightforward that each value in the $\vec{w}$ represents the log-likelihood of certain n-gram, while each value in the $\vec{x}$ represents whether that n-gram appears in the sentence, so $\vec{x}[i]\in {1, -1}, (1\leq i\leq N)$. And from now on we can represent the correlation of a sentence with a language model by computing $y=\vec{w}\cdot\vec{x}$, the larger the $y$, the higher the probability, the more correlation they have.&lt;/p&gt;
+
+&lt;p&gt;And for binary classification, we can have:&lt;/p&gt;
+
+&lt;p&gt;$y_P=\vec{w_P}\cdot\vec{x}, y_N=\vec{w_N}\cdot\vec{x}$&lt;/p&gt;
+
+&lt;p&gt;$y=\sign y_P\cdot P(y=1)-y_N\cdot P(y=-1) $&lt;/p&gt;
+
+&lt;p&gt;$y=\sign (\vec{w_P}\cdot P(y=1)-\vec{w_N}\cdot P(y=-1))\cdot\vec{x}$, don’t forget the prior here&lt;/p&gt;
+
+&lt;p&gt;$y=\sign \vec{w}\cdot\vec{x}, (\vec{w}=\vec{w_P}\cdot P(y=1)-\vec{w_N}\cdot P(y=-1))$&lt;/p&gt;
+
+&lt;p&gt;Finally, we transformed the perplexity problem into a linear classifier form.&lt;/p&gt;</content><author><name></name></author><summary type="html">Perplexity is Actually Naive Bayes</summary></entry></feed>
