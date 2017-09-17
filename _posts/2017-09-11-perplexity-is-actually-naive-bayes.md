@@ -3,6 +3,7 @@ layout: post
 title:  "Perplexity is Actually Naive Bayes"
 date:   2017-09-11 11:34:47 -0700
 categories: nlp
+description: explain why perplexity in natural language processing language model is a form of linear classifier or naive bayes classifier
 ---
 
 ### Perplexity is Actually Naive Bayes

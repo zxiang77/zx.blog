@@ -3,6 +3,7 @@ layout: post
 title:  "From HMM to MEMM"
 date:   2017-09-16 17:57:35 -0700
 categories: NLP
+description: explain the fundamentals about Hidden Markov Model (HMM) and extend it to the application of MaxEnt Markov Model (MEMM)
 ---
 $\DeclareMathOperator*{\argmax}{arg\,max}$
 Both HMM (Hidden Markov Model) and MEMM(MaxEnt Markov Model) are widely used in the field of NLP. This article is trying to articulate these two models and compare their differences. Most of my knowledge about them comes from [slides of MIT's NLP course](http://www.mit.edu/~6.863/spring2011/jmnew/6.pdf).

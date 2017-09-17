@@ -3,6 +3,7 @@ layout: post
 title:  "Generative Model vs. Deterministic Model"
 date:   2017-09-15 17:57:35 -0700
 categories: ml
+description: explain the difference between generative model and deterministic model in machine learning
 ---
 
 ### Generative Model vs. Deterministic Model
