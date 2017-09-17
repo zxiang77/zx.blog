@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Zili&#39;s Blog</title>
-  <meta name="description" content="This is a place where Zili record things while learning">
+  <title>Generative Model vs. Deterministic Model</title>
+  <meta name="description" content="Generative Model vs. Deterministic Model In the world of machine learning, we actually deal with probability for the most of the time. To name a few, Naive B...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://localhost:4000/404.html">
+  <link rel="canonical" href="http://localhost:4000/ml/2017/09/15/discriminative-vs-generative-model.html">
   <link rel="alternate" type="application/rss+xml" title="Zili&#39;s Blog" href="/feed.xml">
   
   
@@ -67,26 +67,55 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
-<div class="container">
-  <h1>404</h1>
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Generative Model vs. Deterministic Model</h1>
+    <p class="post-meta">
+      <time datetime="2017-09-15T17:57:35-07:00" itemprop="datePublished">
+        
+        Sep 15, 2017
+      </time>
+      <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+      <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+      </p>
+  </header>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+  <div class="post-content" itemprop="articleBody">
+    <h3 id="generative-model-vs-deterministic-model">Generative Model vs. Deterministic Model</h3>
+<p>In the world of machine learning, we actually deal with probability for the most of the time. To name a few, Naive Bayes, logistic regression. However, there are two main ways to deal with it, given observation $O$, and the sequence of states $S$ and the two ways are related to two different types of models in machine learning:</p>
+
+<p>1)<b>discriminative models</b> maximize the chain probability given the observation (also called MLE - maximum likelihood estimation):</p>
+
+<p>$\DeclareMathOperator*{\argmax}{arg\,max}$
+$\argmax\limits_{S}P(S|O)$</p>
+
+<p>2)<b>generative models</b> optimize posterior probability given prior probability (also called MAP - maximize a posterior):</p>
+
+<p>$\argmax\limits_{S}P(S|O) $</p>
+
+<p>$=\argmax\limits_{S}\frac{P(O|S)P(S)}{P(O)}  $ (Bayes Rules)</p>
+
+<p>$=\argmax\limits_{S} P(O|S)P(S)$ remove $P(O)$ as that does not affect when $S$ can maximize the term</p>
+
+<p>This is the final posterior term we want to maximize:</p>
+
+<p>$\argmax\limits_{S} P(O|S)P(S)$</p>
+
+<p>Here, the $P(S)$ is the prior.</p>
+
+<p>P.S.: the discriminative and generative model’s connection with MLE v.s. MAP concepts are just my own words, I didn’t find anyone relate them together, though they share the same formula. If anyone knows any difference, please let me know!</p>
+
+<p>It is usually said that generative models are more flexible because it can be re-constructed to the form of $P(S|O)$, but the fact is, discriminative usually gives better performance than generative model. It is due to the principles behind these two types of models: 1) generative models model how the observations were generated and calculate which class gives the highest probability given the generation assumption ($P(x|y)P(y)$); 2) discriminative, however, only cares about classifying the data based on data ($P(y|x)$). These concepts makes generative models have more assumptions than discriminative models, so when its assumption does not stand well, its performance will be worse than discriminative models.</p>
+
+  </div>
+
+  
+</article>
 
       </div>
     </main>

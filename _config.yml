@@ -16,13 +16,13 @@
 title: Zili's Blog
 email: zx77@cornell.edu
 description: This is a place where Zili record things while learning
-baseurl: "zx.blog" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username:
 github_username:  zxiang77
 
 # Build settings
-markdown: redcarpet
+markdown: kramdown
 theme: minima
 
 sass:

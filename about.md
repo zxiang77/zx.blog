@@ -8,4 +8,4 @@ Welcome to Zili's personal website!! I created this site to share some of my int
 
 Hi! I am Zili. I am recent master graduate from Information Science at Cornell University. I am interested in machine learning, computer graphics and web development. Since I am a curious person, my interest list might keep growing rapidly! Feel free to contact me with my contact info in my resume if you are hiring!
 [This]({{ site.url }}/assets/Zili_Resume.pdf) is my resume.
-![image-title-here](/assets/profile.jpg){:class="img-responsive"}
+<!-- ![image-title-here](/assets/profile.jpg){ width=50% } -->
