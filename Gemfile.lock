@@ -216,8 +216,7 @@ DEPENDENCIES
   github-pages
   jekyll (= 3.5.2)
   jekyll-feed (~> 0.6)
-  jekyll-theme-cayman
-  jekyll-theme-time-machine
+  jekyll-sass-converter
   minima
   redcarpet (~> 3.0.0)
   tzinfo-data
