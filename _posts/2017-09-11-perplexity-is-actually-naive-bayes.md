@@ -23,24 +23,24 @@ Then let's talk about why its doing the same thing as Naive Bayes. I will demons
 
 The language model way of doing it is to get:
 
-$\argmin\limits_{c\in\{-1,1\}} PP(W|y=c) $
+$\argmin\limits_{c\in\{-1,1\}} PP(W\|y=c) $
 
-$= \argmin\limits_{c\in\{-1,1\}} p(W|y=c)^{-1/N}$
+$= \argmin\limits_{c\in\{-1,1\}} p(W\|y=c)^{-1/N}$
 
-$=\argmax\limits_{c\in\{-1,1\}} p(W|y=c)$
+$=\argmax\limits_{c\in\{-1,1\}} p(W\|y=c)$
 
 While in Naive Bayes, we are exactly dealing with this!!
 
-$\argmax\limits_{c\in\{-1,1\}} p(W|y=c)$
+$\argmax\limits_{c\in\{-1,1\}} p(W\|y=c)$
 
 Similarly, multinomial classification only replace $c\in\{-1,1\}$ with $c\in C$, with $C$ representing all the possible classes. Then it's getting much more clear now.
 
-$\argmax\limits_{c\in\{-1,1\}} p(W|y=c)$
+$\argmax\limits_{c\in\{-1,1\}} p(W\|y=c)$
 
-$=\argmax\limits_{c\in\{-1,1\}} p(w_1|y=c)p(w_1|w_2,y=c)...p(w_i|w_{i+1},y=c)...p(w_{N-1}|w_N,y=c)$
+$=\argmax\limits_{c\in\{-1,1\}} p(w_1\|y=c)p(w_1\|w_2,y=c)...p(w_i\|w_{i+1},y=c)...p(w_{N-1}\|w_N,y=c)$
 (called introducing Naive Bayes rules for NB, and Ngram for language model)
 
-$=\argmax\limits_{c\in\{-1,1\}} \log p(w_0w_1|y=c)+\log p(w_1|w_2,y=c)+...+\log p(w_i|w_{i+1},y=c)+...+\log p(w_{N-1}|w_N,y=c)$
+$=\argmax\limits_{c\in\{-1,1\}} \log p(w_0w_1\|y=c)+\log p(w_1\|w_2,y=c)+...+\log p(w_i\|w_{i+1},y=c)+...+\log p(w_{N-1}\|w_N,y=c)$
 How do we relate this to n-gram model? If we see the above equation as $y = \vec{w}\vec{x}$, then let's just think both $\vec{w}$ and $\vec{x}$ as vectors of size $V^n$ with $V$ representing vocabulary size. Then these vectors can represent any n-gram in the language model and it is straightforward that each value in the $\vec{w}$ represents the log-likelihood of certain n-gram, while each value in the $\vec{x}$ represents whether that n-gram appears in the sentence, so $\vec{x}[i]\in \{1, -1\}, (1\leq i\leq N)$. And from now on we can represent the correlation of a sentence with a language model by computing $y=\vec{w}\cdot\vec{x}$, the larger the $y$, the higher the probability, the more correlation they have.
 
 And for binary classification, we can have:
