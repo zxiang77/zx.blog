@@ -8,8 +8,18 @@ description: a maze crawler built with WebGL.
 
 This is an extension of my project on Computer Graphics Practicum. Shiyu Wang, Yuyan Tang and I worked together on this project.
 
+#### Instructions
+Press `up`, `down`, `left`, `right` to move around.
+
 Press `M` to update the configuration of the maze crawler.
 
 You can update _FOV(field of view)_, _eye height_ and _maze map_ here.
+
+In _maze map_, `#` represents a wall and `.` represents floor.
+
+#### TODO
+- [x] Implement skybox in background
+- [ ] Use more complex textures from [openGameArt](https://opengameart.org/)(textures with bumping effect)
+- [ ] Increase playability of this maze crawler
 
 [Play!](https://mazecrawler.herokuapp.com/index.html)
