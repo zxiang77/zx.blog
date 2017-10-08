@@ -6,7 +6,7 @@ categories: cg
 description: a maze crawler built with WebGL.
 ---
 
-This is an extension of my project on Computer Graphics Practicum. Shiyu Wang, Yuyan Tang and I worked together on this project.
+This is an extension of my project on Computer Graphics Practicum at Cornell University. Shiyu Wang, Yuyan Tang and I worked together on this project.
 
 #### Instructions
 Press `up`, `down`, `left`, `right` to move around.
@@ -23,6 +23,6 @@ In _maze map_, `#` represents a wall and `.` represents floor.
 - [ ] Use more complex textures from [openGameArt](https://opengameart.org/)(textures with bumping effect)
 - [ ] Increase playability of this maze crawler
 
-P.S: the markdown I am using does not support checkbox, so this looks a little bit clumsy here.
+P.S: the markdown I am using does not support checkbox, so this looks a little bit awkward here.
 
 [Play!](https://mazecrawler.herokuapp.com/index.html)
