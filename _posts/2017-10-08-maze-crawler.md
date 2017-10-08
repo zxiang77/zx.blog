@@ -15,7 +15,7 @@ Press `M` to update the configuration of the maze crawler.
 
 You can update _FOV(field of view)_, _eye height_ and _maze map_ here.
 
-In _maze map_, `#` represents a wall and `.` represents floor.
+In _maze map_, `#` represents a wall and `.` represents floor. A valid maze map should have the same number of cells on each row and each column and be surrounded by walls. 
 
 #### TODO
 
