@@ -1,10 +1,12 @@
 ---
 layout: post
 title:  "Maze Crawler"
-date:   2017-09-15 17:57:35 -0700
+date:   2017-10-08 01:58:22 -0700
 categories: cg
 description: a maze crawler built with WebGL.
 ---
+
+This is an extension of my project on Computer Graphics Practicum. Shiyu Wang, Yuyan Tang and I worked together on this project.
 
 Press `M` to update the configuration of the maze crawler.
 
