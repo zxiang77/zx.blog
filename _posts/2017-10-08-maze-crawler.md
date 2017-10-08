@@ -18,8 +18,11 @@ You can update _FOV(field of view)_, _eye height_ and _maze map_ here.
 In _maze map_, `#` represents a wall and `.` represents floor.
 
 #### TODO
+
 - [x] Implement skybox in background
 - [ ] Use more complex textures from [openGameArt](https://opengameart.org/)(textures with bumping effect)
 - [ ] Increase playability of this maze crawler
+
+P.S: the markdown I am using does not support checkbox, so this looks a little bit clumsy here.
 
 [Play!](https://mazecrawler.herokuapp.com/index.html)
