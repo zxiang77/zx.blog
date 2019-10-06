@@ -17,7 +17,7 @@ title: Zili's Blog
 email: zx77@cornell.edu
 description: This is a place where Zili record things while learning
 baseurl: "zx.blog" # the subpath of your site, e.g. /blog
-url: "http://zilixiang.me/" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://zxiang77.github.io/zx.blog" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username:
 github_username:  zxiang77
 
