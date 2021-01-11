@@ -12,7 +12,7 @@ gem "jekyll", "3.5.2"
 
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
 
-gem 'redcarpet', '~> 3.0.0'
+gem 'redcarpet', '~> 3.5.1'
 gem "minima"
 gem 'github-pages', group: :jekyll_plugins
 gem 'jekyll-seo-tag'
